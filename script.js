@@ -1,3 +1,6 @@
+//function to genarate a random R P S output from the computer using 
+//the Math.random() function
+
 function computerPlay() {
     let outputValue = Math.random();
 
@@ -9,7 +12,11 @@ function computerPlay() {
         return ("Scissors");
 }
 
-
+//a function for a round of play. 
+//a selection array is used to contain the possible R P S choices.
+//a 3 by 3 matrix is create to assign the result between different player and computer output
+// where player wins is 1, computer winds is 0, draw is 0.
+ 
 function playRound (playerSelection, computerSelection) {
     let playerSelectionStandardized = playerSelection.charAt(0).toUpperCase() + playerSelection.slice(1).toLowerCase();
     let selectionArray = ["Rock", "Paper", "Scissors"];
@@ -33,6 +40,10 @@ function playRound (playerSelection, computerSelection) {
         return(`You Win! ${playerSelectionStandardized} beats ${computerSelection}`);
     }
 }
+
+//a function for 5 rounds of games
+//it will stop if either player or computer reaches 3 wins
+//the game result will be alerted on the page at last
 
 function game(){
     let playerWins = 0;

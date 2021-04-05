@@ -1,0 +1,1 @@
+a simple 5 rounds Rock-Paper-Scissors game played on the console
