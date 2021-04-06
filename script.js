@@ -33,48 +33,49 @@ function playRound (playerSelection, computerSelection) {
     }
 
     if(resultIndex === -1){
+        computerWinCounter++; 
         return(`You Lose! ${computerSelection} beats ${playerSelectionStandardized}`);
     }
 
     if(resultIndex === 1){
+        playerWinCounter++;
         return(`You Win! ${playerSelectionStandardized} beats ${computerSelection}`);
     }
 }
 
-//a function for 5 rounds of games
-//it will stop if either player or computer reaches 3 wins
-//the game result will be alerted on the page at last
+let playerWinCounter = 0;
+let computerWinCounter = 0;
+let roundResult = "Let's start!";
+let rockPaperScissorsEmojis = {Rock:"✊", Paper:"✋", Scissors:"✌"};
+const buttons = document.querySelectorAll('button');
+const computerChoice = document.querySelector('#computerChoice'); 
+const yourChoice = document.querySelector('#yourChoice');
 
-function game(){
-    let playerWins = 0;
-    let computerWins = 0;
+buttons.forEach(function(button){
+    button.addEventListener('click', function(){
 
-    for (var i = 0; i < 5; i++){
-
-        if(playerWins === 3 || computerWins === 3)
-            break;
-
-        let playerSelection = window.prompt("Rock/Paper/Scissors?");
         let computerSelection = computerPlay();
-        let roundResult = playRound(playerSelection,computerSelection);
+        roundResult = playRound(button.id,computerSelection);
+        counter.textContent = `You: ${playerWinCounter} vs Computer: ${computerWinCounter}`;
+        announcer.textContent = roundResult;
+        computerChoice.textContent = rockPaperScissorsEmojis[computerSelection];
+        yourChoice.textContent = rockPaperScissorsEmojis[button.id];
 
-        console.log(roundResult);
+        if (playerWinCounter === 5 || computerWinCounter === 5){
+            counter.textContent = `You: ${playerWinCounter} vs Computer: ${computerWinCounter}`;
 
-        if(roundResult.match(/Win/)){
-            playerWins++;
+            if(playerWinCounter > computerWinCounter){
+                alert("Player Wins!!!");
+                announcer.textContent ="Player Wins, Press to restart";
+            }
+            else if (computerWinCounter > playerWinCounter){
+                alert("Player Loses...");
+                announcer.textContent ="Computer Wins Press to restart";
+            }
+            playerWinCounter = 0;
+            computerWinCounter = 0;
+            return;
         }
-        else if(roundResult.match(/Lose/)){
-            computerWins++;
-        }
-    }
+    });
+});
 
-    if(playerWins > computerWins)
-        alert(`${playerWins} vs ${computerWins}, you win!`);
-    else if (playerWins < computerWins)
-        alert(`${playerWins} vs ${computerWins}, you lose!`);
-    else if (playerWins === computerWins)
-        alert(`${playerWins} vs ${computerWins}, draw game!`);
-
-}
-
-game();
